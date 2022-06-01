@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title>ICT AR</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
+	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+	<a-scene mindar-image="imageTargetSrc: targets.mind;" color-space="sRGB" vr-mode-ui="enabled: false"
+		renderer="colorManagement: true, physicallyCorrectLights" device-orientation-permission-ui="enabled: false">
+
+	  <a-assets>
+		<img id="logo" src="logo.png" />
+		<img id="title-ict" src="title-ict.png" />
+		<img id="title-itmo" src="title-itmo.png" />
+		<img id="numbers-left" src="numbers-left.png" />
+		<img id="numbers-right" src="numbers-right.png" />
+		<img id="vk" src="button-vk.png" />
+		<img id="youtube" src="button-youtube.png" />
+		<img id="telegram" src="button-telegram.png" />
+		<video id="video" src="video.mp4"
+			preload="auto" response-type="arraybuffer" loop crossorigin webkit-playsinline autoplay playsinline></video>
+	  </a-assets>
+
+	  <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+
+	  <a-entity id="image-target" mindar-image-target="targetIndex: 0">
+
+		<a-image src="#logo" position="0 0.65 0" width="0.25" height="0.25"
+			animation="property: width; to: 0.3; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+			animation__2="property: height; to: 0.3; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+		<a-image src="#title-ict" position="-0.3 0.65 0" width="0.2" height="0.2"></a-image>
+		<a-image src="#title-itmo" position="0.3 0.65 0" width="0.3" height="0.2"></a-image>
+
+		<a-image src="#numbers-left" position="-0.6 0.1 0" width="0.07" height="0.7" opacity="1"
+			animation="property: opacity; to: 0.1; dur: 1500; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+		<a-image src="#numbers-right" position="0.6 0.1 0" width="0.07" height="0.7" opacity="1"
+			animation="property: opacity; to: 0.1; dur: 1500; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+		<a-video id="video-player" src="#video" webkit-playsinline playsinline width="1" height="0.552" position="0 0.1 0"></a-video>
+
+		<a-image id="button-vk" src="#vk" class="clickable" position="-0.3 -0.5 0" width="0.2" height="0.2"></a-image>
+		<a-image id="button-youtube" src="#youtube" class="clickable" position="0 -0.5 0" width="0.2" height="0.2"></a-image>
+		<a-image id="button-telegram" src="#telegram" class="clickable" position="0.3 -0.5 0" width="0.2" height="0.2"></a-image>
+
+	  </a-entity>
+
+	</a-scene>
+
+	<script>
+		const buttonVk = document.querySelector('#button-vk');
+		const buttonYoutube = document.querySelector('#button-youtube');
+		const buttonTelegram = document.querySelector('#button-telegram');
+		const imageTarget = document.querySelector('#image-target');
+
+		buttonVk.addEventListener("click", event => {
+			window.open('https://vk.com/ict.itmo', '_blank');
+		});
+		buttonYoutube.addEventListener("click", event => {
+			window.open('https://www.youtube.com/channel/UC7cJ1RBFsZ7WWjoXV_5Vl1A', '_blank');
+		});
+		buttonTelegram.addEventListener("click", event => {
+			window.open('https://t.me/itmoict', '_blank');
+		});
+
+		imageTarget.addEventListener("targetFound", event => {
+			document.querySelector("#video").play();
+		});
+		imageTarget.addEventListener("targetLost", event => {
+			document.querySelector("#video").pause();
+		});
+	</script>
+</body>
+</html>
